@@ -6,41 +6,49 @@
  *Shift key for this example will be (3)
  *Input: Enter (e) for encrypt or (d) for decrypt
  *Output: Will out put to a file the encrypted phrase.
- * */
+
+ *Design for implementation taken from http://practicalcryptography.com/ciphers/
+ * 
+ */
 
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
 
 
-
+char caesarEncrypt(char* input, int key);
 
 int main(int argc, char const *argv[])
 {
 	int key = 3;
-	char userInput[50];
-	char lett1[1];
-	char result[50];
-
+	char userInput[100];
+	char var;
+	char result;
+   
 	printf("Please enter (e) for encrypt or (d) for decrypt: ");
-	scanf("%s", lett1);
-
-	if(lett1 == 'e'){
+	
+   scanf(" %c", &var);
+	if(var == 'e'){
 		printf("Please enter the plaintext you want to encrypt: ");
-
-		//grab plaintext from user to manipulate
-		fgets(userInput, sizeof(userInput), stdin);	
+ 
 
 		int i=0;
 
-		while(userInput[i] != NULL){
+     //printf("Here : %s.n", userInput); 
+	 //grab plaintext from user to manipulate
+	  while(fgets(userInput, sizeof(userInput), stdin) != '\n'){
+         /*size_t len = strlen(buffer);
+         if (len > 0 && buffer[len-1] == '\n') {
+            buffer[--len] = '\0';
+         }*/
+			result += caesarEncrypt(userInput, key);
 
-			result += caesarEncrypt(userInput, key)
+      
 		}
 
-		printf("The cipher text is: %s\n", result);
+		//printf("The cipher text is: %s\n", result);
 
-	}else if (lett1 == 'd'){
+	}/*else if (lett1 == 'd'){
 
 		printf("Please enter the plaintext you want to decrypt: ");
 		//grab plaintext from user to manipulate
@@ -60,7 +68,7 @@ int main(int argc, char const *argv[])
 		printf("Sorry you can only encryp and decrypt.");
 
 	}
-
+*/
 	return 0;
 }
 
@@ -70,7 +78,7 @@ char caesarEncrypt(char* input, int key){
 	char cyph;
 	char cypherInfo;
 
-	while(input != '\0' && input.length()-1 > i){
+	while(input != '\0' && strlen(input)-1 > i){
 
 		//Ascii letters for lowercase start at 97
 		//Mod'd by 26 letters in the alphabet
@@ -85,7 +93,7 @@ char caesarEncrypt(char* input, int key){
 	}
 
 	return cyph;
-
+   printf("Here is the %c\n", cyph);
 }
 
 char caesarDecrypt(char* input, int key){
@@ -94,7 +102,7 @@ char caesarDecrypt(char* input, int key){
 	char cyph;
 	char cypherInfo;
 
-	while(input != '\0' && input.length()-1 > i){
+	while(input != '\0' && strlen(input)-1 > i){
 
 		//Ascii letters for lowercase start at 97
 		//Mod'd by 26 letters in the alphabet
